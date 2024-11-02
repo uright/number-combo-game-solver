@@ -33,7 +33,8 @@ def generate_expressions(digits, operations):
                         grouped = ''.join(f"{perm[k]}{ops[k]}" for k in range(i)) + \
                                   f"({''.join(perm[i:j])})" + \
                                   ''.join(f"{perm[k]}{ops[k-1]}" for k in range(j, n))
-                        yield grouped
+                        if grouped[-1] not in operations:  # Ensure no trailing operator
+                            yield grouped
     for ops in itertools.product(operations, repeat=len(digits)-1):
         for perm in itertools.permutations(digits):
             # Create expression by interleaving digits and operations
